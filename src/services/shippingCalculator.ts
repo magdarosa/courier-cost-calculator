@@ -2,7 +2,6 @@ import { Order } from '../models/order';
 import { ParcelSizingService } from './parcelSizingService';
 import { CostItem, OrderCalculation } from '../types';
 
-
 export class ShippingCalculator {
   constructor(private readonly sizingService: ParcelSizingService) {}
 

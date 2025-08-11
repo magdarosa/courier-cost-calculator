@@ -3,7 +3,6 @@ import { ParcelSizingService } from './parcelSizingService';
 import { Order } from '../models/order';
 import { Parcel } from '../models/parcel';
 
-
 describe('ShippingCalculator', () => {
   let calculator: ShippingCalculator;
   let sizingService: ParcelSizingService;
