@@ -31,4 +31,28 @@ describe('Order', () => {
       expect(order.getParcelCount()).toBe(2);
     });
   });
+
+  describe('hasSpeedyShipping', () => {
+    it('should create an order with speedy shipping option', () => {
+      const order = new Order(sampleParcels, { speedyShipping: true });
+      
+      expect(order.hasSpeedyShipping()).toBe(true);
+      expect(order.parcels).toEqual(sampleParcels);
+    });
+
+    it('should return true when speedy shipping explicitly enabled', () => {
+      const order = new Order(sampleParcels, { speedyShipping: true });
+      expect(order.hasSpeedyShipping()).toBe(true);
+    });
+
+    it('should return false when speedy shipping explicitly disabled', () => {
+      const order = new Order(sampleParcels, { speedyShipping: false });
+      expect(order.hasSpeedyShipping()).toBe(false);
+    });
+
+    it('should return false when speedy shipping not specified', () => {
+      const order = new Order(sampleParcels);
+      expect(order.hasSpeedyShipping()).toBe(false);
+    });
+  });
 });

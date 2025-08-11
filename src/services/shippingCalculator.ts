@@ -19,12 +19,22 @@ export class ShippingCalculator {
         cost
       });
     }
+  
+    let subtotal = items.reduce((sum, item) => sum + item.cost, 0);
 
-    const totalCost = items.reduce((sum, item) => sum + item.cost, 0);
+    // Apply speedy shipping if requested
+    if (order.hasSpeedyShipping()) {
+      const speedyCost = subtotal; // doubles the cost
+      items.push({
+        type: 'speedy-shipping',
+        cost: speedyCost
+      });
+      subtotal += speedyCost;
+    }
 
     return {
       items,
-      totalCost
+      totalCost: subtotal
     };
   }
 }

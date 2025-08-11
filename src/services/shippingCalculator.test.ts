@@ -49,4 +49,57 @@ describe('ShippingCalculator', () => {
       ]);
     });
   });
+
+  describe('Size-based pricing with speedy shipping', () => {
+    it('should double the cost when speedy shipping is enabled', () => {
+      const parcel = new Parcel('P1', { length: 5, width: 3, height: 2 });
+      const order = new Order([parcel], { speedyShipping: true });
+      
+      const result = calculator.calculateOrder(order);
+      
+      expect(result.totalCost).toBe(6); // 3 + 3 (speedy)
+      expect(result.items).toHaveLength(2);
+      expect(result.items[0]).toEqual({
+        type: 'Small',
+        cost: 3
+      });
+      expect(result.items[1]).toEqual({
+        type: 'speedy-shipping',
+        cost: 3
+      });
+    });
+
+    it('should not affect individual parcel costs in output', () => {
+      const parcels = [
+        new Parcel('P1', { length: 5, width: 3, height: 2 }), // $3
+        new Parcel('P2', { length: 30, width: 20, height: 15 }), // $8
+      ];
+      const order = new Order(parcels, { speedyShipping: true });
+      
+      const result = calculator.calculateOrder(order);
+      
+      expect(result.totalCost).toBe(22); // (3 + 8) + (3 + 8) speedy
+      expect(result.items).toHaveLength(3);
+      expect(result.items[0].cost).toBe(3); // Original parcel cost unchanged
+      expect(result.items[1].cost).toBe(8); // Original parcel cost unchanged
+      expect(result.items[2]).toEqual({
+        type: 'speedy-shipping',
+        cost: 11 // Same as subtotal
+      });
+    });
+
+    it('should not add speedy shipping when not requested', () => {
+      const parcel = new Parcel('P1', { length: 5, width: 3, height: 2 });
+      const order = new Order([parcel], { speedyShipping: false });
+      
+      const result = calculator.calculateOrder(order);
+      
+      expect(result.totalCost).toBe(3);
+      expect(result.items).toHaveLength(1);
+      expect(result.items[0]).toEqual({
+        type: 'Small',
+        cost: 3
+      });
+    });
+  });
 });

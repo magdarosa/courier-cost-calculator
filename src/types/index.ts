@@ -16,6 +16,10 @@ export interface Parcel {
     readonly dimensions: Dimensions;
 }
 
+export interface OrderOptions {
+    speedyShipping?: boolean;
+}   
+
 export interface CostItem {
     readonly type: string;
     readonly cost: number;
