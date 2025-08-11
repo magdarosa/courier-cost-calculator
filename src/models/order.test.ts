@@ -11,6 +11,20 @@ describe('Order', () => {
     ];
   });
 
+  describe('constructor', () => {
+    it('should create an order with parcels', () => {
+      const order = new Order(sampleParcels);
+      
+      expect(order.parcels).toEqual(sampleParcels);
+    });
+
+    it('should throw error for empty parcel array', () => {
+      expect(() => {
+        new Order([]);
+      }).toThrow('Order must contain at least one parcel');
+    });
+  });
+
   describe('getParcelCount', () => {
     it('should return correct parcel count', () => { 
       const order = new Order(sampleParcels);

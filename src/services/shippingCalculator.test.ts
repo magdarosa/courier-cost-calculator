@@ -41,6 +41,12 @@ describe('ShippingCalculator', () => {
       
       expect(result.totalCost).toBe(51); // 3 + 8 + 15 + 25
       expect(result.items).toHaveLength(4);
+      expect(result.items).toEqual([
+        { type: 'Small', cost: 3 },
+        { type: 'Medium', cost: 8 },
+        { type: 'Large', cost: 15 },
+        { type: 'XL', cost: 25 }
+      ]);
     });
   });
 });
