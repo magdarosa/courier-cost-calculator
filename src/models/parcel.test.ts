@@ -43,5 +43,21 @@ describe('Parcel', () => {
         const parcel = new Parcel('P1', { length: 100, width: 30, height: 20 });
         expect(parcel.getSize()).toBe(ParcelSize.XL);
       });
+
+      // Boundaries  
+      it('should classify as MEDIUM when longest side is exactly 10cm', () => {
+        const parcel = new Parcel('P1', { length: 10, width: 5, height: 3 });
+        expect(parcel.getSize()).toBe(ParcelSize.MEDIUM);
+      });
+
+      it('should classify as LARGE when longest side is exactly 50cm', () => {
+        const parcel = new Parcel('P1', { length: 50, width: 30, height: 20 });
+        expect(parcel.getSize()).toBe(ParcelSize.LARGE);
+      });
+
+      it('should classify as XL when longest side is exactly 100cm', () => {
+        const parcel = new Parcel('P1', { length: 100, width: 30, height: 20 });
+          expect(parcel.getSize()).toBe(ParcelSize.XL);
+       });
     });
   });
